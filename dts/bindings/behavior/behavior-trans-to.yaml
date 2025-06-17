@@ -13,7 +13,7 @@ properties:
     default: 0
     description: "復帰先のレイヤー番号"
 
-include: no_param.yaml
+include: zero_param.yaml
 #include: two_param.yaml
 #param1 is button of the mouse to click(MB1, MB2, MB3, etc.)
 #param2 is the layer to return to after clicking(0,1,2, etc.)
