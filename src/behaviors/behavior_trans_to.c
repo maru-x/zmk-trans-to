@@ -11,6 +11,7 @@
 #include <zephyr/logging/log.h>
 
 #include <zmk/behavior.h>
+#include <zmk/keymap.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
@@ -23,7 +24,19 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
 
 static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
-    return ZMK_BEHAVIOR_TRANSPARENT;
+    // パラメータからレイヤー番号を取得
+    uint8_t layer = binding->param1;
+    
+    LOG_DBG("Switching to layer %d", layer);
+    
+    // レイヤーを切り替え
+    int ret = zmk_keymap_layer_activate(layer);
+    if (ret < 0) {
+        LOG_ERR("Failed to activate layer %d: %d", layer, ret);
+        return ret;
+    }
+    
+    return ZMK_BEHAVIOR_OPAQUE;
 }
 
 static const struct behavior_driver_api behavior_trans_to_driver_api = {
