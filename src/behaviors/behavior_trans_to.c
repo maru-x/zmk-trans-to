@@ -27,16 +27,22 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
     // パラメータからレイヤー番号を取得
     uint8_t layer = binding->param1;
     
-    LOG_DBG("Switching to layer %d", layer);
+    LOG_DBG("Executing transparent behavior before switching to layer %d", layer);
     
-    // レイヤーを切り替え
+    // まずtrans動作を実行（透過的な動作を許可）
+    int trans_ret = ZMK_BEHAVIOR_TRANSPARENT;
+    
+    // その後レイヤーを切り替え
     int ret = zmk_keymap_layer_to(layer);
     if (ret < 0) {
         LOG_ERR("Failed to switch to layer %d: %d", layer, ret);
         return ret;
     }
     
-    return ZMK_BEHAVIOR_OPAQUE;
+    LOG_DBG("Successfully switched to layer %d after transparent behavior", layer);
+    
+    // trans動作の結果を返す（透過的な動作を継続）
+    return trans_ret;
 }
 
 static const struct behavior_driver_api behavior_trans_to_driver_api = {
