@@ -52,10 +52,26 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
 static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
     const struct device *dev = binding->behavior_dev;
+    LOG_DBG("TRT: on_keymap_binding_released for %s. dev=%p", dev->name, (void*)dev); // 追加
+    if (!dev) {
+        LOG_ERR("TRT: dev is NULL!");
+        return ZMK_BEHAVIOR_TRANSPARENT;
+    }
     const struct behavior_trans_to_config *config = dev->config;
+    LOG_DBG("TRT: config=%p, timeout_ms=%u, return_layer=%u", (void*)config, config ? config->timeout_ms : 0, config ? config->return_layer : 0); // 追加
+    if (!config) {
+        LOG_ERR("TRT: config is NULL!");
+        return ZMK_BEHAVIOR_TRANSPARENT;
+    }
     struct behavior_trans_to_data *data = dev->data;
+    LOG_DBG("TRT: data=%p", (void*)data); // 追加
+    if (!data) {
+        LOG_ERR("TRT: data is NULL!");
+        return ZMK_BEHAVIOR_TRANSPARENT;
+    }
 
     if (config->timeout_ms > 0) {
+        LOG_DBG("TRT: About to start timer for %s. timer_ptr=%p", dev->name, (void*)&data->timer); // 追加
         k_timer_start(&data->timer, K_MSEC(config->timeout_ms), K_NO_WAIT);
         LOG_DBG("Timer started for layer %u, timeout %u ms on %s", config->return_layer, config->timeout_ms, dev->name);
     } else {
