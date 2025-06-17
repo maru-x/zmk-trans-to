@@ -30,9 +30,9 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
     LOG_DBG("Switching to layer %d", layer);
     
     // レイヤーを切り替え
-    int ret = zmk_keymap_layer_activate(layer);
+    int ret = zmk_keymap_layer_to(layer);
     if (ret < 0) {
-        LOG_ERR("Failed to activate layer %d: %d", layer, ret);
+        LOG_ERR("Failed to switch to layer %d: %d", layer, ret);
         return ret;
     }
     
