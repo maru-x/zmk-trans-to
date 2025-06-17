@@ -1,0 +1,6 @@
+name: trans-to
+build:
+  cmake: .
+  kconfig: src/behaviors/Kconfig.trt
+  settings:
+    dts_root: .

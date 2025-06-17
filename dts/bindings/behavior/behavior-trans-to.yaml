@@ -1,0 +1,35 @@
+description: "transparent back behavior"
+compatible: "zmk,behavior-trans-to"
+
+properties:
+  timeout-ms:
+    type: int # 'integer' から 'int' に変更 (より一般的)
+    required: false
+    default: 10
+    description: "レイヤー復帰までのタイムアウト (ms)"
+  return-layer:
+    type: int # 'integer' から 'int' に変更 (より一般的)
+    required: false
+    default: 0
+    description: "復帰先のレイヤー番号"
+
+include: no_param.yaml
+#include: two_param.yaml
+#param1 is button of the mouse to click(MB1, MB2, MB3, etc.)
+#param2 is the layer to return to after clicking(0,1,2, etc.)
+
+# include: behavior-metadata.yaml
+
+# properties:
+#   label:
+#     type: string
+#     required: false
+#     deprecated: true
+#   "#binding-cells":
+#     type: int
+#     required: true
+#     const: 2
+
+# binding-cells:
+#   - param1
+#   - param2

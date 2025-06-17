@@ -1,0 +1,4 @@
+config ZMK_BEHAVIOR_TRANS_TO
+    bool "trans to"
+    depends on ZMK_SPLIT_ROLE_CENTRAL
+    default y
